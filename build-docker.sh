@@ -12,17 +12,16 @@ fi
 
 echo "Starting build..."
 cp "$1" ./prosody.deb
-docker build -t prosody/prosody:"$2" .
+docker build -t justinba1010/docker-prosody:"$2" .
 for i in "${@:3}"; do
   echo "Also building tag $i"
-  docker build -t prosody/prosody:"$i" .
+  docker build -t justinba1010/docker-prosody:"$i" .
 done
-docker push prosody/prosody
+docker push justinba1010/docker-prosody
 
 echo "Cleaning up..."
-docker rmi prosody/prosody:"$2"
+docker rmi justinba1010/docker-prosody:"$2"
 for i in "${@:3}"; do
   echo "Also cleaning tag $i"  
-  docker rmi prosody/prosody:"$i"
+  docker rmi justinba1010/docker-prosody:"$i"
 done
-rm ./prosody.deb

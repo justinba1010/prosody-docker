@@ -70,6 +70,7 @@ modules_enabled = {
 		--"admin_telnet"; -- Opens telnet console interface on localhost port 5582
 
 	-- HTTP modules
+    "http:;
 		"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
 		"websocket"; -- XMPP over WebSockets
 		"http_files"; -- Serve static files from a directory over HTTP
@@ -85,6 +86,20 @@ modules_enabled = {
 		"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
 		--"proxy65"; -- Enables a file transfer proxy service which clients behind NAT can use
 }
+
+http_ports = { 5280 }
+http_interfaces = { "*", "::" }
+
+https_ports = { 5281 }
+https_interfaces = { "*", "::" }
+
+http_paths = {
+  bosh = "/http-bind";
+  files = "/";
+}
+
+c2s_ports = { 5280, 5281 }
+
 
 -- These modules are auto-loaded, but should you want
 -- to disable them then uncomment them here:

@@ -5,7 +5,7 @@
 
 FROM debian:10
 
-MAINTAINER Prosody Developers <developers@prosody.im>
+#MAINTAINER Prosody Developers <developers@prosody.im>
 
 # Install dependencies
 RUN apt-get update \
@@ -34,7 +34,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install and configure prosody
-COPY ./prosody.deb /tmp/prosody.deb
+COPY prosody.deb /tmp/prosody.deb
 RUN dpkg -i /tmp/prosody.deb \
     && sed -i '1s/^/daemonize = false;\n/' /etc/prosody/prosody.cfg.lua \
     && perl -i -pe 'BEGIN{undef $/;} s/^log = {.*?^}$/log = {\n    {levels = {min = "info"}, to = "console"};\n}/smg' /etc/prosody/prosody.cfg.lua
