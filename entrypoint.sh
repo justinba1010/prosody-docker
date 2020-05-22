@@ -8,8 +8,7 @@ if [[ "$1" != "prosody" ]]; then
     exit 0;
 fi
 
-if [ "$LOCAL" -a  "$PASSWORD" -a "$DOMAIN" ] ; then
-    prosodyctl register "$LOCAL" "$DOMAIN" "$PASSWORD"
-fi
+prosodyctl register debug localhost debug
+prosodyctl register debug2 localhost debug2
 
 runuser -u prosody -- "$@"

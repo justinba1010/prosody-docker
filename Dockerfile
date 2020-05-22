@@ -41,6 +41,7 @@ RUN dpkg -i /tmp/prosody.deb \
 
 RUN mkdir -p /var/run/prosody && chown prosody:prosody /var/run/prosody
 
+COPY ./prosody.cfg.lua.dist /prosody.cfg.lua.dist
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
