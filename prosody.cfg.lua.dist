@@ -98,11 +98,23 @@ http_paths = {
   files = "/";
 }
 
-c2s_ports = { 5280, 5281 }
+VirtualHost "localhost"
+http_host = "localhost"
+http_default_host = "localhost"
+
+cross_domain_bosh = true
+
+Component "localhost" "http"
+  modules_enables = { "bosh" }
+
+consider_bosh_secure = true
+
+c2s_ports = { 5281 }
 
 
 -- These modules are auto-loaded, but should you want
--- to disable them then uncomment them here:
+-- to disable them then uncomment them here
+:
 modules_disabled = {
 	-- "offline"; -- Store offline messages
 	-- "c2s"; -- Handle client connections

@@ -31,6 +31,7 @@ RUN apt-get update \
         openssl \
         ca-certificates \
         ssl-cert \
+        nginx \
     && rm -rf /var/lib/apt/lists/*
 
 # Install and configure prosody
@@ -38,6 +39,14 @@ COPY prosody.deb /tmp/prosody.deb
 RUN dpkg -i /tmp/prosody.deb \
     && sed -i '1s/^/daemonize = false;\n/' /etc/prosody/prosody.cfg.lua \
     && perl -i -pe 'BEGIN{undef $/;} s/^log = {.*?^}$/log = {\n    {levels = {min = "info"}, to = "console"};\n}/smg' /etc/prosody/prosody.cfg.lua
+
+RUN echo "location /http-bind { \
+proxy_pass  http://localhost:5280/http-bind; \
+proxy_set_header Host $host; \
+proxy_set_header X-Forwarded-For $remote_addr; \
+proxy_buffering off; \
+tcp_nodelay on; \
+}" >> /etc/nginx/nginx.conf
 
 RUN mkdir -p /var/run/prosody && chown prosody:prosody /var/run/prosody
 
